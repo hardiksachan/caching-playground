@@ -1,6 +1,11 @@
+val ktorVersion: String by project
+val kotlinVersion: String by project
+val logbackVersion: String by project
+
 plugins {
     application
-    kotlin("jvm") version "1.5.31"
+    kotlin("jvm")
+    kotlin("plugin.serialization")
 }
 
 group = "com.example"
@@ -15,8 +20,10 @@ repositories {
 }
 
 dependencies {
-    implementation("org.jetbrains.kotlin:kotlin-stdlib:1.5.31")
-    implementation("io.ktor:ktor-server-core:1.6.4")
-    implementation("io.ktor:ktor-server-netty:1.6.4")
-    implementation("ch.qos.logback:logback-classic:1.2.6")
+    implementation("org.jetbrains.kotlin:kotlin-stdlib:$kotlinVersion")
+
+    implementation("io.ktor:ktor-serialization:$ktorVersion")
+    implementation("io.ktor:ktor-server-core:$ktorVersion")
+    implementation("io.ktor:ktor-server-netty:$ktorVersion")
+    implementation("ch.qos.logback:logback-classic:$logbackVersion")
 }
