@@ -12,7 +12,14 @@ val faker = Faker()
 fun Route.peopleRouting() {
     route("/people") {
         get {
-            call.respond(status = HttpStatusCode.OK, message= getPeople())
+            val size: Int = try {
+                call.request.queryParameters["size"]?.toInt() ?: 20
+            }
+            catch (e: NumberFormatException) {
+                return@get call.respondText("Not a valid size", status = HttpStatusCode.BadRequest)
+            }
+
+            call.respond(status = HttpStatusCode.OK, message= getPeople(size))
         }
     }
 }
