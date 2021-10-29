@@ -12,7 +12,7 @@ The server exposes a REST endpoint which fetches a list of "fake" people data. H
 ### Request
 
 ```curlrc
-GET https://yourdomain.com/people?q=4
+GET https://yourdomain.com/people?size=4
 ```
 
 ### Response
