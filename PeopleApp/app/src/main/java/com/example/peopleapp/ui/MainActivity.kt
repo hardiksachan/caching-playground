@@ -1,4 +1,4 @@
-package com.example.peopleapp
+package com.example.peopleapp.ui
 
 import android.os.Bundle
 import androidx.activity.ComponentActivity
