@@ -8,8 +8,10 @@ import io.ktor.client.engine.android.*
 import io.ktor.client.features.json.*
 import io.ktor.client.features.json.serializer.*
 import io.ktor.client.request.*
+import kotlinx.coroutines.flow.Flow
+import kotlinx.coroutines.flow.flow
 
-class HerokuDataSource(
+class RemoteDataSourceImpl(
     private val endpoint: String,
     private val dispatcherProvider: IDispatcherProvider
 ) : IRemoteDataSource {
@@ -25,10 +27,12 @@ class HerokuDataSource(
         }
     }
 
-    override suspend fun getPeople(): Resource<List<Person>> =
+    override fun getPeople(): Flow<Resource<List<Person>>> = flow {
+        emit(Resource.Loading)
         try {
-            Resource.Success(client.get(endpoint))
-        } catch (e: Throwable) {
-            Resource.Failure(e)
+            emit(Resource.Success(client.get(endpoint)))
+        } catch (th: Throwable) {
+            emit(Resource.Failure(th))
         }
+    }
 }
