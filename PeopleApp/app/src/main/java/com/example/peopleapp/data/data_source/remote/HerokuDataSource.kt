@@ -7,9 +7,10 @@ import io.ktor.client.*
 import io.ktor.client.engine.android.*
 import io.ktor.client.features.json.*
 import io.ktor.client.features.json.serializer.*
+import io.ktor.client.request.*
 
 class HerokuDataSource(
-    private val baseUrl: String,
+    private val endpoint: String,
     private val dispatcherProvider: IDispatcherProvider
 ) : IRemoteDataSource {
 
@@ -24,8 +25,10 @@ class HerokuDataSource(
         }
     }
 
-    override suspend fun getPeople(): Resource<List<Person>> {
-        TODO("Not yet implemented")
-    }
-
+    override suspend fun getPeople(): Resource<List<Person>> =
+        try {
+            Resource.Success(client.get(endpoint))
+        } catch (e: Throwable) {
+            Resource.Failure(e)
+        }
 }
