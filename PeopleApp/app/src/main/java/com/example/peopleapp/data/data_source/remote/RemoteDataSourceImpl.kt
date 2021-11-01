@@ -12,6 +12,7 @@ import io.ktor.client.features.json.serializer.*
 import io.ktor.client.request.*
 import kotlinx.coroutines.flow.Flow
 import kotlinx.coroutines.flow.flow
+import kotlinx.coroutines.flow.flowOn
 
 class RemoteDataSourceImpl(
     private val endpoint: String,
@@ -32,9 +33,15 @@ class RemoteDataSourceImpl(
     override fun getPeople(): Flow<Resource<List<Person>>> = flow {
         emit(Resource.Loading)
         try {
-            emit(Resource.Success(client.get<List<PersonDto>>(endpoint).toDomain()))
+            emit(
+                Resource.Success(
+                    client.get<List<PersonDto>> {
+                        url(endpoint)
+                    }.toDomain()
+                )
+            )
         } catch (th: Throwable) {
             emit(Resource.Failure(th))
         }
-    }
+    }.flowOn(dispatcherProvider.IO)
 }
