@@ -2,6 +2,8 @@ package com.example.peopleapp.data.data_source.remote
 
 import com.example.peopleapp.common.IDispatcherProvider
 import com.example.peopleapp.common.Resource
+import com.example.peopleapp.data.data_source.remote.dto.PersonDto
+import com.example.peopleapp.data.data_source.remote.dto.toDomain
 import com.example.peopleapp.domain.models.Person
 import io.ktor.client.*
 import io.ktor.client.engine.android.*
@@ -30,7 +32,7 @@ class RemoteDataSourceImpl(
     override fun getPeople(): Flow<Resource<List<Person>>> = flow {
         emit(Resource.Loading)
         try {
-            emit(Resource.Success(client.get(endpoint)))
+            emit(Resource.Success(client.get<List<PersonDto>>(endpoint).toDomain()))
         } catch (th: Throwable) {
             emit(Resource.Failure(th))
         }
