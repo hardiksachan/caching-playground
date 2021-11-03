@@ -4,7 +4,7 @@ CREATE TABLE cachedPerson (
     email TEXT NOT NULL
 );
 
-insertPeople:
+insertPerson:
 INSERT OR REPLACE INTO cachedPerson(
     name,
     city,
