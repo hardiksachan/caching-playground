@@ -1,0 +1,19 @@
+CREATE TABLE cachedPerson (
+    name TEXT UNIQUE NOT NULL PRIMARY KEY,
+    city TEXT NOT NULL,
+    email TEXT NOT NULL
+);
+
+insertPeople:
+INSERT OR REPLACE INTO cachedPerson(
+    name,
+    city,
+    email
+)
+VALUES (?, ?, ?);
+
+clearCache:
+DELETE FROM cachedPerson;
+
+getPeople:
+SELECT * FROM cachedPerson;
