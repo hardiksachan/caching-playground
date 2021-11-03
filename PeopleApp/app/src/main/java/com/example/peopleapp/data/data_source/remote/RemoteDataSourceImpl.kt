@@ -31,13 +31,13 @@ class RemoteDataSourceImpl(
     }
 
     override fun getPeople(): Flow<Resource<List<Person>>> = flow {
-        emit(Resource.Loading)
         try {
             emit(
                 Resource.Success(
-                    client.get<List<PersonDto>> {
+                    data = client.get<List<PersonDto>> {
                         url(endpoint)
-                    }.toDomain()
+                    }.toDomain(),
+                    isCached = false
                 )
             )
         } catch (th: Throwable) {
