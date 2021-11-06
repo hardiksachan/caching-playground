@@ -29,7 +29,7 @@ class MainActivity : ComponentActivity() {
         setContent {
 
             val res: Resource<List<Person>> =
-                resFlow.collectAsState(initial = Resource.Success(emptyList(), true)).value
+                resFlow.collectAsState(initial = Resource.Success(emptyList())).value
 
             AppTheme {
                 // A surface container using the 'background' color from the theme

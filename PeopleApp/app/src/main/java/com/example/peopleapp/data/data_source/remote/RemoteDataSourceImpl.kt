@@ -34,10 +34,9 @@ class RemoteDataSourceImpl(
         try {
             emit(
                 Resource.Success(
-                    data = client.get<List<PersonDto>> {
+                    client.get<List<PersonDto>> {
                         url(endpoint)
-                    }.toDomain(),
-                    isCached = false
+                    }.toDomain()
                 )
             )
         } catch (th: Throwable) {

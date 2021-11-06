@@ -34,8 +34,7 @@ class PersistentCache(
         .mapToList(dispatcherProvider.IO)
         .map { dao ->
             Resource.Success(
-                data = dao.toDomain(),
-                isCached = true
+                dao.toDomain()
             )
         }
         .catch { th ->
