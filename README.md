@@ -41,3 +41,6 @@ GET https://yourdomain.com/people?size=4
     }
 ]
 ```
+
+#### Note
+The server is currently hosted at https://fake-people-server.herokuapp.com/people
