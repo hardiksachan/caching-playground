@@ -13,10 +13,10 @@ class PersistentCache(
     private val peopleCacheQueries: PeopleCacheQueries,
     private val dispatcherProvider: IDispatcherProvider
 ) : ILocalCache {
-    override suspend fun insertPeople(people: List<Person>) = people.forEach { person ->
+    override suspend fun refreshCache(people: List<Person>) = people.forEach { person ->
         person.run {
             withContext(dispatcherProvider.IO) {
-                peopleCacheQueries.insertPerson(
+                peopleCacheQueries.refreshCache(
                     name, city, email
                 )
             }

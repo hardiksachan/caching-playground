@@ -5,7 +5,7 @@ import com.example.peopleapp.domain.models.Person
 import kotlinx.coroutines.flow.Flow
 
 interface ILocalCache {
-    suspend fun insertPeople(people: List<Person>)
+    suspend fun refreshCache(people: List<Person>)
 
     suspend fun clearCache()
 

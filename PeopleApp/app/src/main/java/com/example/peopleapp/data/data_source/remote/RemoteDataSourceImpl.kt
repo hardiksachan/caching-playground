@@ -13,6 +13,7 @@ import io.ktor.client.request.*
 import kotlinx.coroutines.flow.Flow
 import kotlinx.coroutines.flow.flow
 import kotlinx.coroutines.flow.flowOn
+import kotlinx.coroutines.withContext
 
 class RemoteDataSourceImpl(
     private val endpoint: String,
@@ -30,17 +31,16 @@ class RemoteDataSourceImpl(
         }
     }
 
-    override fun getPeople(): Flow<Resource<List<Person>>> = flow {
+    override suspend fun getPeople(): Resource<List<Person>> = withContext(dispatcherProvider.IO) {
         try {
-            emit(
-                Resource.Success(
-                    client.get<List<PersonDto>> {
-                        url(endpoint)
-                    }.toDomain()
-                )
+            Resource.Success(
+                client.get<List<PersonDto>> {
+                    url(endpoint)
+                }.toDomain()
             )
+
         } catch (th: Throwable) {
-            emit(Resource.Failure(th))
+            Resource.Failure(th)
         }
-    }.flowOn(dispatcherProvider.IO)
+    }
 }

@@ -4,13 +4,15 @@ CREATE TABLE cachedPerson (
     email TEXT NOT NULL
 );
 
-insertPerson:
-INSERT OR REPLACE INTO cachedPerson(
-    name,
-    city,
-    email
-)
-VALUES (?, ?, ?);
+refreshCache {
+    DELETE FROM cachedPerson;
+    INSERT OR REPLACE INTO cachedPerson(
+        name,
+        city,
+        email
+    )
+    VALUES (?, ?, ?);
+}
 
 clearCache:
 DELETE FROM cachedPerson;

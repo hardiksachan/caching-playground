@@ -5,5 +5,5 @@ import com.example.peopleapp.domain.models.Person
 import kotlinx.coroutines.flow.Flow
 
 interface IRemoteDataSource {
-    fun getPeople(): Flow<Resource<List<Person>>>
+    suspend fun getPeople(): Resource<List<Person>>
 }
